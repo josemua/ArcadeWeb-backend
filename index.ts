@@ -1,105 +1,28 @@
-import { addEmitHelper } from "typescript";
-import conectarBD from "./db/db";
-import { Enum_Rol } from "./models/enums";
-import { ProjectModel } from "./models/project";
+import express  from "express";
+import cors from 'cors';
+import { ApolloServer } from "apollo-server-express";
+import dotenv from 'dotenv';
+import conectarBD from './db/db'
+import { typeDefs } from './graphql/types'
+import { resolvers } from './graphql/resolvers';
 
-const main = async () => {
-  await conectarBD();
+dotenv.config();
 
-  //Crear proyecto
-/* await ProjectModel.create({
-  nombre: "Proyecto 2",
-  presupuesto: 5000,
-  fechaInicio: Date.now(),
-  fechaFin: new Date("2021/12/24"),
-  lider: '6194a4be14b48c9ae74908db',
-})
-.then((p) =>{
-  console.log("Proyecto creado", p);
-})
-.catch((e) =>{
-  console.log("Error creando el proyecto");
-}); */
+const server = new ApolloServer({
+    typeDefs: typeDefs,
+    resolvers: resolvers,
+});
 
-//Obtener proyecto
-/* const proyecto = await ProjectModel.find({nombre: 'Proyecto 2'}).populate('lider');
-console.log("El proyecto es: ", proyecto); */
+const app = express();
 
+app.use(express.json());
 
+app.use(cors());
 
-};
-main();
+app.listen({ port: process.env.PORT || 4000}, async () =>{
+    await conectarBD();
+    await server.start();
 
-
-//CRUD Usuarios
-
-//Crear Usuario
-/* await UserModel.create({
-  correo: "admin@admin.com",
-  nombre: "admin",
-  rol: Enum_Rol.administrador,
-})
-  .then((u) => {
-    console.log("usuario creado", u);
-  })
-  .catch((e) => {
-    console.log("Error creando usuario", e);
-  }); */
-
-
-  /* await UserModel.create({
-  correo: "estudiante@arcadeweb.com",
-  nombre: "Jose M",
-  rol: Enum_Rol.estudiante,
-})
-  .then((u) => {
-    console.log("usuario creado", u);
-  })
-  .catch((e) => {
-    console.log("Error creando usuario", e);
-  }); */
-
-  //Obtener usuario
- /*  await UserModel.findOne({correo: 'admin@arcadeweb.com'})
-  .then((u) =>{
-    console.log("Usuario encontrado", u);
-  })
-  .catch((e) =>{
-    console.log("Error encontrando usuario", e);
-  }); */
-
-  //Obtener todos los usuarios
-  /* await UserModel.find()
-  .then((u) =>{
-    console.log("Usuarios", u);
-  })
-  .catch((e) =>{
-    console.log("Error obteniendo los usuarios", e);
-  }); */
-
-  //Actualizar usuario
-/* await UserModel.findOneAndUpdate(
-  { correo: 'estudiante@arcadeweb.com'},
-  {
-    nombre: 'Jose Muñoz',
-  }
-)
-.then((u) =>{
-  console.log("usuario actualizado", u);
-})
-.catch((e) =>{
-  console.log("Error actualizando usuario", e);
-}); */
-
-/* await UserModel.findOneAndDelete({correo: 'test@arcadeweb.com'})
-  .then((u) =>{
-    console.log("Usuario eliminado", u);
-  })
-  .catch((e) =>{
-    console.log("Error eliminando usuario", e);
-  }); */
-
-
-
-  // CRUD Proyectos
-
+    server.applyMiddleware({app});
+    console.log(`Servidor conectado al puerto ${process.env.PORT || 4000}`)
+});
