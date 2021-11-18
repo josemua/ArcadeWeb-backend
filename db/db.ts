@@ -2,7 +2,7 @@ import { connect } from "mongoose";
 
 const conectarBD = async () => {
   return await connect(
-    "mongodb+srv://admin:admin2021@cluster0.rv6oo.mongodb.net/arcadeweb?retryWrites=true&w=majority"
+    process.env.DATABASE_URL
   )
     .then(() => {
       console.log("Conectado a BD ArcadeWeb");
