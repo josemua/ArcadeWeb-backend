@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from 'apollo-server-express';
 
 const tiposEnums = gql`
   enum Enum_EstadoUsuario {
@@ -17,7 +17,7 @@ const tiposEnums = gql`
   }
   enum Enum_FaseProyecto {
     INICIADO
-    DESARROLLO
+    EN_DESARROLLO
     TERMINADO
     NULO
   }
