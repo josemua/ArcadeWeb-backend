@@ -22,6 +22,17 @@ const tiposInscripcion = gql`
         ): Inscripcion
 
         aprobarInscripcion(id: String!): Inscripcion
+
+        editarInscripcion(
+            _id: String!
+            estado: Enum_EstadoInscripcion!,
+            fechaIngreso: Date,
+            fechaEgreso: Date,
+            proyecto: String!,
+            estudiante: String!,
+        ) : Inscripcion
+
+        eliminarInscripcion (_id: String!): Inscripcion
     }
 `;
 
