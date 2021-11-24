@@ -21,7 +21,7 @@ const tiposInscripcion = gql`
             estudiante: String!
         ): Inscripcion
 
-        aprobarInscripcion(_id: String!): Inscripcion
+        aprobarInscripcion(id: String!): Inscripcion
 
         editarInscripcion(
             _id: String!
