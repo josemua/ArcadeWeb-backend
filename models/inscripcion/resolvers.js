@@ -24,6 +24,20 @@ const resolverInscripciones = {
         
         return inscripcionAprobada;
     },
+    eliminarInscripcion: async (parent, args) => {
+      const inscripcionEliminada = await InscriptionModel.findByIdAndDelete(args._id);
+      return inscripcionEliminada;
+   },
+   editarInscripcion: async (parent, args) => {
+    const inscripcionEditada = await InscriptionModel.findByIdAndUpdate(args._id,{
+      estado: args.estado,
+      fechaIngreso: args.fechaIngreso,
+      fechaEgreso: args.fechaEgreso,
+      proyecto: args.proyecto,
+      estudiante: args.estudiante,
+    }, {new: true});
+    return inscripcionEditada;
+ },
   },
 };
 
