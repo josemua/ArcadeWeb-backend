@@ -36,7 +36,7 @@ const tiposUsuario = gql`
     ): Usuario
     
     eliminarUsuario(_id: String, correo: String): Usuario
-  }
+vv  }
 `;
 
 export { tiposUsuario };
