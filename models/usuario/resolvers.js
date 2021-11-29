@@ -2,14 +2,14 @@ import { UserModel } from './usuario.js';
 
 const resolversUsuario = {
   Query: {
-    Usuarios: async (parent, args, context) => {
+    Usuarios: async (parent, args, context) => {  
       if(context.userData.rol === 'ADMINISTRADOR'){
         const usuarios = await UserModel.find();
         return usuarios;
       } else{
         return null
       }
-  },
+    },
     Usuario: async (parent, args) => {
       const usuario = await UserModel.findOne({ _id: args._id });
       return usuario;

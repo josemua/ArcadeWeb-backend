@@ -70,4 +70,11 @@ projectSchema.virtual("inscripciones", {
 
 const ProjectModel = model("Project", projectSchema);
 
+//mostrar
+/*const mostrar = async () => {
+  const Project = await ProjectModel.find() 
+  console.log(Project)
+}
+mostrar()*/
+
 export { ProjectModel };

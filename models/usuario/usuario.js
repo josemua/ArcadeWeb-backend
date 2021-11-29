@@ -46,4 +46,11 @@ const userSchema = new Schema({
 
 const UserModel = model('User', userSchema);
 
+//mostrar
+/*const mostrar = async () => {
+  const user = await UserModel.find() 
+  console.log(user)
+}
+mostrar()*/
+
 export { UserModel };

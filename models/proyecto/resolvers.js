@@ -3,15 +3,13 @@ import { ProjectModel } from "./proyecto.js";
 const resolversProyecto = {
   Query: {
     Proyectos: async (parent, args) => {
-      const proyectos = await ProjectModel.find()
-        .populate({
-          path: "avances",
-          populate: ({
-            path: "creadoPor",
-          }),
-        })
-        .populate("lider");
+      const proyectos = await ProjectModel.find().populate({ path: "avances", populate: ({ path: "creadoPor",}), }).populate("lider");
       return proyectos;
+    },
+
+    filtrarProyecto: async (parents, args) => {
+      const proyectoFiltrado = await ProjectModel.find({ proyecto: args.idProyecto }).populate({ path: "avances", populate: ({ path: "creadoPor", }), }).populate("lider");
+      return proyectoFiltrado;
     },
   },
 
