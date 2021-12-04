@@ -33,4 +33,11 @@ const inscriptionSchema = new Schema({
 
 const InscriptionModel = model('Inscripcion', inscriptionSchema);
 
+//mostrar
+/*const mostrar = async () => {
+  const Inscripcion = await InscriptionModel.find() 
+  console.log(Inscripcion)
+}
+mostrar()*/
+
 export { InscriptionModel };
