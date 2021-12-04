@@ -10,7 +10,7 @@ const tiposUsuario = gql`
     rol: Enum_Rol!
     estado: Enum_EstadoUsuario
   }
-  
+
   type Query {
     Usuarios: [Usuario]
     Usuario(_id: String!): Usuario
@@ -21,6 +21,7 @@ const tiposUsuario = gql`
       apellido: String!
       identificacion: String!
       correo: String!
+      password: String!
       rol: Enum_Rol!
       estado: Enum_EstadoUsuario
     ): Usuario
@@ -31,11 +32,13 @@ const tiposUsuario = gql`
       apellido: String!
       identificacion: String!
       correo: String!
-      rol: Enum_Rol!
-      estado: Enum_EstadoUsuario
+      rol: Enum_Rol
+      estado: Enum_EstadoUsuario!
     ): Usuario
-    
+
     eliminarUsuario(_id: String, correo: String): Usuario
+
+    aprobarUsuario(_id: String!): Usuario
   }
 `;
 

@@ -15,6 +15,10 @@ const userSchema = new Schema({
       message: 'El formato del correo electrónico está malo.',
     },
   },
+  password: {
+    type: String,
+    required: true
+  },
   identificacion: {
     type: String,
     required: true,
@@ -41,5 +45,12 @@ const userSchema = new Schema({
 });
 
 const UserModel = model('User', userSchema);
+
+//mostrar
+/*const mostrar = async () => {
+  const user = await UserModel.find() 
+  console.log(user)
+}
+mostrar()*/
 
 export { UserModel };
