@@ -52,6 +52,14 @@ const resolversUsuario = {
         return usuarioEliminado;
       }
     },
+
+    aprobarUsuario: async (parent, args) =>{
+      const usuarioAprobado = await UserModel.findByIdAndUpdate(args._id, {
+        estado: "AUTORIZADO"
+      }, {new: true});
+
+      return usuarioAprobado;
+    },
   },
 };
 

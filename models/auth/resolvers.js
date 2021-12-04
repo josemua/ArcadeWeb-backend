@@ -13,6 +13,7 @@ const resolversAutenticacion = {
         identificacion: args.identificacion,
         correo: args.correo,
         rol: args.rol,
+        estado: args.estado,
         password: hashedPassword,
       });
       return {
@@ -23,6 +24,7 @@ const resolversAutenticacion = {
           identificacion: usuarioCreado.identificacion,
           correo: usuarioCreado.correo,
           rol: usuarioCreado.rol,
+          estado: usuarioCreado.estado
         }),
       };
     },
@@ -40,6 +42,7 @@ const resolversAutenticacion = {
             identificacion: usuarioEncontrado.identificacion,
             correo: usuarioEncontrado.correo,
             rol: usuarioEncontrado.rol,
+            estado: usuarioEncontrado.estado
           }),
         };
       }
@@ -59,6 +62,7 @@ const resolversAutenticacion = {
             identificacion: context.userData.identificacion,
             correo: context.userData.correo,
             rol: context.userData.rol,
+            estado: context.userData.estado
           }),
         };
       }
