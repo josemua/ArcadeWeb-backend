@@ -13,7 +13,6 @@ const resolversAutenticacion = {
         identificacion: args.identificacion,
         correo: args.correo,
         rol: args.rol,
-        estado: args.estado,
         password: hashedPassword,
       });
       return {

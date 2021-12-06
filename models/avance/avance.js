@@ -15,7 +15,14 @@ const avanceSchema = new Schema({
   },
   observaciones: [
     {
-      type: String,
+      descripcion: {
+        type: String,
+        required: true,
+      },
+      fecha: {
+        type: Date,
+        required: true,
+      },
     },
   ],
   proyecto: {
@@ -31,12 +38,5 @@ const avanceSchema = new Schema({
 });
 
 const ModeloAvance = model('Avance', avanceSchema);
-
-//mostrar
-/*const mostrar = async () => {
-  const Avance = await ModeloAvance.find() 
-  console.log(Avance)
-}
-mostrar()*/
 
 export { ModeloAvance };
