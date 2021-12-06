@@ -9,7 +9,6 @@ const inscriptionSchema = new Schema({
     type: String,
     enum: ['ACEPTADO', 'RECHAZADO', 'PENDIENTE'],
     default: 'PENDIENTE',
-    required: true,
   },
   fechaIngreso: {
     type: Date,
@@ -32,12 +31,5 @@ const inscriptionSchema = new Schema({
 });
 
 const InscriptionModel = model('Inscripcion', inscriptionSchema);
-
-//mostrar
-/*const mostrar = async () => {
-  const Inscripcion = await InscriptionModel.find() 
-  console.log(Inscripcion)
-}
-mostrar()*/
 
 export { InscriptionModel };

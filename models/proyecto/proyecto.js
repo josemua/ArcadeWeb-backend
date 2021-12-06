@@ -15,11 +15,11 @@ const projectSchema = new Schema(
     },
     fechaInicio: {
       type: Date,
-      required: true,
+      required: false,
     },
     fechaFin: {
       type: Date,
-      required: true,
+      required: false,
     },
     estado: {
       type: String,
@@ -68,13 +68,7 @@ projectSchema.virtual("inscripciones", {
   foreignField: "proyecto",
 });
 
-const ProjectModel = model("Project", projectSchema);
+const ProjectModel = model("Proyecto", projectSchema);
 
-//mostrar
-/*const mostrar = async () => {
-  const Project = await ProjectModel.find() 
-  console.log(Project)
-}
-mostrar()*/
 
 export { ProjectModel };

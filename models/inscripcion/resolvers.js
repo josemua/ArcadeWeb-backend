@@ -9,7 +9,7 @@ const resolverInscripciones = {
     },
 
     filtrarInscripcion: async (parents, args) => {
-      const inscripcionFiltrada = await InscriptionModel.find({ estudiante: args.idEstudiante }).populate('estudiante').populate('proyecto');
+      const inscripcionFiltrada = await InscriptionModel.find({ estado: "PENDIENTE" }).populate('estudiante').populate('proyecto');
       return inscripcionFiltrada;
     },
   },
