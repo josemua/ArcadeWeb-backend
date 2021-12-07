@@ -27,7 +27,7 @@ const resolversProyecto = {
 
     filtrarProyecto: async (parents, args) => {
       const proyectoFiltrado = await ProjectModel.find({
-        proyecto: args.idProyecto,
+        estado: "ACTIVO",
       }).populate(
         { path: "avances", populate: { path: "creadoPor" } },
         {

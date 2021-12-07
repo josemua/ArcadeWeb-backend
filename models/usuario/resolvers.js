@@ -8,7 +8,8 @@ const resolversUsuario = {
         return InscriptionModel.find({ estudiante: parent._id });
       },
     },
-    Usuarios: async (parent, args, context) => {
+    Usuarios: async (parent, args, context) => { 
+      if(context.userData.rol === 'ADMINISTRADOR'){
       const usuarios = await UserModel.find().populate([
         {
           path: "inscripciones",
@@ -24,7 +25,27 @@ const resolversUsuario = {
         },
       ]);
       return usuarios;
-    },
+    } else if(context.userData.rol === 'LIDER'){
+      const usuarios = await UserModel.find({ rol: "ESTUDIANTE"}).populate([
+      {
+        path: "inscripciones",
+        populate: {
+          path: "proyecto",
+        },
+      },
+      {
+        path: "avancesCreados",
+      },
+      {
+        path: "proyectosLiderados",
+      },
+    ]);
+    return usuarios;
+    } else{
+      return null;
+    };
+  },
+    
     Usuario: async (parent, args) => {
       const usuario = await UserModel.findOne({ _id: args._id });
       return usuario;
