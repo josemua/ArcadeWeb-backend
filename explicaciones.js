@@ -1,34 +1,37 @@
-import { addEmitHelper } from "typescript";
+/* import { addEmitHelper } from "typescript";
 import conectarBD from "./db/db";
-import { Enum_Rol } from "./models/enums";
-import { ProjectModel } from "./models/project";
+import { Enum_Rol, Enum_TipoObjetivo } from "./models/enums/enums";
+import { ObjectiveModel } from "./models/objective";
+import { ProjectModel } from "./models/proyecto/proyecto"; */
 
-const main = async () => {
-  await conectarBD();
+
+
 
   //Crear proyecto
 /* await ProjectModel.create({
-  nombre: "Proyecto 2",
-  presupuesto: 5000,
+  nombre: "Proyecto 3",
+  presupuesto: 50000,
   fechaInicio: Date.now(),
-  fechaFin: new Date("2021/12/24"),
+  fechaFin: new Date("2022/11/17"),
   lider: '6194a4be14b48c9ae74908db',
+  objetivos: [
+    {descripcion: "Este es el objetivo general", tipo: Enum_TipoObjetivo.general},
+    {descripcion: "Este es el objetivo especifico 1", tipo: Enum_TipoObjetivo.especifico},
+    {descripcion: "Este es el objetivo especifico 2", tipo: Enum_TipoObjetivo.especifico},
+  ]
 })
 .then((p) =>{
   console.log("Proyecto creado", p);
 })
 .catch((e) =>{
-  console.log("Error creando el proyecto");
+  console.log("Error creando el proyecto", e);
 }); */
 
 //Obtener proyecto
-/* const proyecto = await ProjectModel.find({nombre: 'Proyecto 2'}).populate('lider');
+/* const proyecto = await ProjectModel.find({id: '61956ff5b4b0f07b6429aeb4 3'});
 console.log("El proyecto es: ", proyecto); */
 
 
-
-};
-main();
 
 
 //CRUD Usuarios
