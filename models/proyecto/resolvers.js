@@ -25,6 +25,20 @@ const resolversProyecto = {
       return proyectos;
     },
 
+    Proyecto: async (parent, args) => {
+      const proyecto = await ProjectModel.findOne({ _id: args._id }).populate([
+        {
+          path: "avances",
+          populate: { path: "creadoPor" },
+        },
+        {
+          path: "inscripciones",
+          populate: { path: "estudiante" },
+        },
+      ]);
+      return proyecto;
+    },
+
     filtrarProyecto: async (parents, args) => {
       const proyectoFiltrado = await ProjectModel.find({
         estado: "ACTIVO",
