@@ -42,7 +42,8 @@ const tiposProyecto = gql`
   }
   type Query {
     Proyectos: [Proyecto]
-    filtrarProyecto(idProyecto: String!): [Proyecto]
+    Proyecto(_id: String!): Proyecto
+    filtrarProyecto: Proyecto
   }
   type Mutation {
     crearProyecto(
