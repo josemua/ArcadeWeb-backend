@@ -54,17 +54,19 @@ const resolversProyecto = {
 
   Mutation: {
     crearProyecto: async (parent, args) => {
-      const proyectoCreado = await ProjectModel.create({
-        nombre: args.nombre,
-        estado: args.estado,
-        fase: args.fase,
-        fechaInicio: args.fechaInicio,
-        fechaFin: args.fechaFin,
-        presupuesto: args.presupuesto,
-        lider: args.lider,
-        objetivos: args.objetivos,
-      });
-      return proyectoCreado;
+      if (context.userData.rol === "LIDER") {
+        const proyectoCreado = await ProjectModel.create({
+          nombre: args.nombre,
+          estado: args.estado,
+          fase: args.fase,
+          fechaInicio: args.fechaInicio,
+          fechaFin: args.fechaFin,
+          presupuesto: args.presupuesto,
+          lider: args.lider,
+          objetivos: args.objetivos,
+        });
+        return proyectoCreado;
+      }
     },
     editarProyecto: async (parent, args) => {
       const proyectoEditado = await ProjectModel.findByIdAndUpdate(
@@ -123,46 +125,78 @@ const resolversProyecto = {
     },
 
     aprobarProyecto: async (parent, args) => {
-      const proyectoAprobado = await ProjectModel.findByIdAndUpdate(
-        args._id,
-        {
-          estado: "ACTIVO",
-          fase: "INICIADO",
-          fechaInicio: new Date(),
-        },
-        { new: true }
-      );
-      return proyectoAprobado;
+      if (context.userData.rol === "ADMINISTRADOR") {
+        const proyectoAprobado = await ProjectModel.findByIdAndUpdate(
+          args._id,
+          {
+            estado: "ACTIVO",
+            fase: "INICIADO",
+            fechaInicio: new Date(),
+          },
+          { new: true }
+        );
+        return proyectoAprobado;
+      }
     },
 
     terminarProyecto: async (parent, args) => {
-      const proyectoTerminado = await ProjectModel.findByIdAndUpdate(
-        args._id,
-        {
-          fase: "TERMINADO",
-          estado: "INACTIVO",
-          fechaFin: new Date(),
-        },
-        { new: true }
-      );
-      return proyectoTerminado;
+      if (context.userData.rol === "ADMINISTRADOR") {
+        const proyectoTerminado = await ProjectModel.findByIdAndUpdate(
+          args._id,
+          {
+            fase: "TERMINADO",
+            estado: "INACTIVO",
+            fechaFin: new Date(),
+          },
+          { new: true }
+        );
+        const cerrarInscripciones = await InscriptionModel.updateMany(
+          { proyecto: args._id, estado: "ACEPTADO" },
+          {
+            fechaEgreso: new Date(),
+          }
+        );
+        return proyectoTerminado;
+      }
     },
 
     inactivarProyecto: async (parent, args) => {
-      const proyectoInactivo = await ProjectModel.findByIdAndUpdate(
-        args._id,
-        {
-          estado: "INACTIVO",
-        },
-        { new: true }
-      );
-      const cerrarInscripciones = await InscriptionModel.updateMany(
-        { proyecto: args._id, estado: "ACEPTADO" },
-        {
-          fechaEgreso: new Date(),
+      if (context.userData.rol === "ADMINISTRADOR") {
+        const proyectoInactivo = await ProjectModel.findByIdAndUpdate(
+          args._id,
+          {
+            estado: "INACTIVO",
+            fechaFin: new Date(),
+          },
+          { new: true }
+        );
+        const cerrarInscripciones = await InscriptionModel.updateMany(
+          { proyecto: args._id, estado: "ACEPTADO" },
+          {
+            fechaEgreso: new Date(),
+          }
+        );
+        return proyectoInactivo;
+      }
+    },
+
+    reactivarProyecto: async (parent, args) => {
+      if (context.userData.rol === "ADMINISTRADOR") {
+        const verificar = await ProjectModel.findOne({ _id: args._id });
+        if (verificar.fase !== "TERMINADO") {
+          const proyectoAprobado = await ProjectModel.findByIdAndUpdate(
+            args._id,
+            {
+              estado: "ACTIVO",
+              fechaFin: null,
+            },
+            { new: true }
+          );
+          return proyectoAprobado;
+        } else {
+          return verificar;
         }
-      );
-      return proyectoInactivo;
+      }
     },
   },
 };
