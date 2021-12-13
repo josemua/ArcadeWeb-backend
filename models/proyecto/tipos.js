@@ -72,6 +72,8 @@ const tiposProyecto = gql`
     terminarProyecto(_id: String!): Proyecto
 
     inactivarProyecto(_id: String!): Proyecto
+
+    reactivarProyecto(_id: String!): Proyecto
   }
 `;
 
