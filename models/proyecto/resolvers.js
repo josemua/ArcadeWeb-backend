@@ -40,15 +40,19 @@ const resolversProyecto = {
     },
 
     filtrarProyecto: async (parents, args) => {
-      const proyectoFiltrado = await ProjectModel.find({
-        estado: "ACTIVO",
-      }).populate(
-        { path: "avances", populate: { path: "creadoPor" } },
-        {
-          path: "inscripciones",
-        }
+      const proyectos = await ProjectModel.find({ lider: args.lider }).populate(
+        [
+          {
+            path: "avances",
+            populate: { path: "creadoPor" },
+          },
+          {
+            path: "inscripciones",
+            populate: { path: "estudiante" },
+          },
+        ]
       );
-      return proyectoFiltrado;
+      return proyectos;
     },
   },
 
@@ -69,17 +73,20 @@ const resolversProyecto = {
       }
     },
     editarProyecto: async (parent, args) => {
-      const proyectoEditado = await ProjectModel.findByIdAndUpdate(
-        args._id,
-        { ...args.campos },
-        { new: true }
-      );
+      if (context.userData.rol === "LIDER") {
+        const verificar = await ProjectModel.findById({ _id: args._id });
+        if (verificar.fase === "ACTIVO") {
+          const proyectoEditado = await ProjectModel.findByIdAndUpdate(
+            args._id,
+            { ...args.campos },
+            { new: true }
+          );
 
-      return proyectoEditado;
-    },
-    eliminarProyecto: async (parent, args) => {
-      const proyectoEliminada = await ProjectModel.findByIdAndDelete(args._id);
-      return proyectoEliminada;
+          return proyectoEditado;
+        } else {
+          return verificar;
+        }
+      }
     },
 
     crearObjetivo: async (parent, args) => {
