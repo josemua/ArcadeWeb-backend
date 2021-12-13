@@ -72,7 +72,7 @@ const resolversProyecto = {
         return proyectoCreado;
       }
     },
-    editarProyecto: async (parent, args) => {
+    editarProyecto: async (parent, args, context) => {
       if (context.userData.rol === "LIDER") {
         const verificar = await ProjectModel.findById({ _id: args._id });
         if (verificar.fase === "ACTIVO") {
