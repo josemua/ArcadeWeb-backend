@@ -53,7 +53,7 @@ const resolversProyecto = {
   },
 
   Mutation: {
-    crearProyecto: async (parent, args) => {
+    crearProyecto: async (parent, args, context) => {
       if (context.userData.rol === "LIDER") {
         const proyectoCreado = await ProjectModel.create({
           nombre: args.nombre,
@@ -124,7 +124,7 @@ const resolversProyecto = {
       return proyectoObjetivo;
     },
 
-    aprobarProyecto: async (parent, args) => {
+    aprobarProyecto: async (parent, args, context) => {
       if (context.userData.rol === "ADMINISTRADOR") {
         const proyectoAprobado = await ProjectModel.findByIdAndUpdate(
           args._id,
@@ -139,7 +139,7 @@ const resolversProyecto = {
       }
     },
 
-    terminarProyecto: async (parent, args) => {
+    terminarProyecto: async (parent, args, context) => {
       if (context.userData.rol === "ADMINISTRADOR") {
         const proyectoTerminado = await ProjectModel.findByIdAndUpdate(
           args._id,
@@ -160,7 +160,7 @@ const resolversProyecto = {
       }
     },
 
-    inactivarProyecto: async (parent, args) => {
+    inactivarProyecto: async (parent, args, context) => {
       if (context.userData.rol === "ADMINISTRADOR") {
         const proyectoInactivo = await ProjectModel.findByIdAndUpdate(
           args._id,
@@ -180,7 +180,7 @@ const resolversProyecto = {
       }
     },
 
-    reactivarProyecto: async (parent, args) => {
+    reactivarProyecto: async (parent, args, context) => {
       if (context.userData.rol === "ADMINISTRADOR") {
         const verificar = await ProjectModel.findOne({ _id: args._id });
         if (verificar.fase !== "TERMINADO") {
