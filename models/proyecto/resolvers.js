@@ -121,7 +121,7 @@ const resolversProyecto = {
       }
     },
 
-    eliminarObjetivo: async (parent, args) => {
+    eliminarObjetivo: async (parent, args, context) => {
       if (context.userData.rol === "LIDER") {
       const proyectoObjetivo = await ProjectModel.findByIdAndUpdate(
         { _id: args.idProyecto },
