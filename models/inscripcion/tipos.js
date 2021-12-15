@@ -22,8 +22,6 @@ const tiposInscripcion = gql`
       estudiante: String!
     ): Inscripcion
 
-    aprobarInscripcion(id: String!): Inscripcion
-
     editarInscripcion(
       _id: String!
       estado: Enum_EstadoInscripcion
@@ -33,7 +31,9 @@ const tiposInscripcion = gql`
       estudiante: String!
     ): Inscripcion
 
-    eliminarInscripcion(_id: String!): Inscripcion
+    aprobarInscripcion(id: String!): Inscripcion
+    rechazarInscripcion(id: String!): Inscripcion
+    
   }
 `;
 
