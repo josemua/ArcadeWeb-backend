@@ -13,6 +13,7 @@ const tiposInscripcion = gql`
   type Query {
     Inscripciones: [Inscripcion]
     filtrarInscripcion: [Inscripcion]
+    misInscripciones(estudiante: String!): [Inscripcion]
   }
 
   type Mutation {

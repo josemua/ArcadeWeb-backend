@@ -17,6 +17,14 @@ const resolverInscripciones = {
         .populate("proyecto");
       return inscripcionFiltrada;
     },
+    misInscripciones: async (parents, args) => {
+      const misProyectos = await InscriptionModel.find({
+        estudiante: args.estudiante,
+      })
+        .populate("estudiante")
+        .populate("proyecto");
+      return misProyectos;
+    },
   },
 
   Mutation: {
