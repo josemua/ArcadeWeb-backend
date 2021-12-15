@@ -18,10 +18,7 @@ const tiposAvance = gql`
 
   input camposAvance {
     _id: ID!
-    fecha: Date!
     descripcion: String!
-    proyecto: String!
-    creadoPor: String!
   }
 
   type Avance {
