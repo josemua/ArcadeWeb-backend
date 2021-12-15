@@ -74,8 +74,8 @@ const resolversProyecto = {
     },
     editarProyecto: async (parent, args, context) => {
       if (context.userData.rol === "LIDER") {
-        const verificar = await ProjectModel.findById({ _id: args._id });
-        if (verificar.fase === "ACTIVO") {
+        const verificar = await ProjectModel.findOne({ _id: args._id });
+        if (verificar.estado === "ACTIVO") {
           const proyectoEditado = await ProjectModel.findByIdAndUpdate(
             args._id,
             { ...args.campos },
@@ -89,7 +89,8 @@ const resolversProyecto = {
       }
     },
 
-    crearObjetivo: async (parent, args) => {
+    crearObjetivo: async (parent, args, context) => {
+      if (context.userData.rol === "LIDER") {
       const proyectoConObjetivo = await ProjectModel.findByIdAndUpdate(
         args.idProyecto,
         {
@@ -101,8 +102,10 @@ const resolversProyecto = {
       );
 
       return proyectoConObjetivo;
+      }
     },
-    editarObjetivo: async (parent, args) => {
+    editarObjetivo: async (parent, args, context) => {
+      if (context.userData.rol === "LIDER") {
       const proyectoEditado = await ProjectModel.findByIdAndUpdate(
         args.idProyecto,
         {
@@ -115,8 +118,11 @@ const resolversProyecto = {
         { new: true }
       );
       return proyectoEditado;
+      }
     },
-    eliminarObjetivo: async (parent, args) => {
+
+    eliminarObjetivo: async (parent, args, context) => {
+      if (context.userData.rol === "LIDER") {
       const proyectoObjetivo = await ProjectModel.findByIdAndUpdate(
         { _id: args.idProyecto },
         {
@@ -129,6 +135,7 @@ const resolversProyecto = {
         { new: true }
       );
       return proyectoObjetivo;
+      }
     },
 
     aprobarProyecto: async (parent, args, context) => {
