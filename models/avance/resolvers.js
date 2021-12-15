@@ -18,7 +18,7 @@ const resolversAvance = {
 
     filtrarAvance: async (parents, args) => {
       const avanceFiltrado = await ModeloAvance.find({
-        proyecto: args.idProyecto,
+        creadoPor: args.idEstudiante,
       })
         .populate("proyecto")
         .populate("creadoPor");
@@ -27,17 +27,19 @@ const resolversAvance = {
   },
 
   Mutation: {
-    crearAvance: async (parents, args) => {
+
+    crearAvance: async (parent, args, context) => {
+      if (context.userData.rol === "ESTUDIANTE") {
+      const proyectoTerminado = await ProjectModel.findOne({ _id: args.proyecto})
+      if (proyectoTerminado.fase === "EN_DESARROLLO"){
       const avanceCreado = ModeloAvance.create({
         fecha: args.fecha,
         descripcion: args.descripcion,
         proyecto: args.proyecto,
         creadoPor: args.creadoPor,
       });
-      return avanceCreado;
-    },
-
-    crearPrimerAvance: async (parent, args) => {
+      return avanceCreado
+    }else if (proyectoTerminado.fase === "INICIADO"){
       const avanceCreado = ModeloAvance.create({
         fecha: args.fecha,
         descripcion: args.descripcion,
@@ -51,10 +53,16 @@ const resolversAvance = {
         }, 
         { new: true }
       );
-      return ("proyecto actualizado", avanceCreado);
+      return avanceCreado;
+      
+    }else{
+        return proyectoTerminado
+      }
+    }
     },
 
-    editarAvance: async (parent, args) => {
+    editarAvance: async (parent, args, context) => {
+      if (context.userData.rol === "ESTUDIANTE") {
       const avanceEditado = await ModeloAvance.findByIdAndUpdate(
         args._id,
         {
@@ -64,9 +72,10 @@ const resolversAvance = {
       );
 
       return avanceEditado;
+      }
     },
 
-    eliminarAvance: async (parent, args) => {
+    eliminarAvance: async (parent, args, context) => {
       if (Object.keys(args).includes("_id")) {
         const avanceEliminado = await ModeloAvance.findOneAndDelete({
           _id: args._id,
@@ -75,7 +84,8 @@ const resolversAvance = {
       }
     },
 
-    crearObservacion: async (parent, args) => {
+    crearObservacion: async (parent, args, context) => {
+      if (context.userData.rol === "LIDER") {
       const avanceConObservacion = await ModeloAvance.findByIdAndUpdate(
         args.idAvance,
         {
@@ -86,9 +96,11 @@ const resolversAvance = {
         { new: true }
       );
       return avanceConObservacion;
+      }
     },
 
-    editarObservacion: async (parent, args) => {
+    editarObservacion: async (parent, args, context) => {
+      if (context.userData.rol === "LIDER") {
       const avanceEditado = await ModeloAvance.findByIdAndUpdate(
         args.idAvance,
         {
@@ -101,6 +113,7 @@ const resolversAvance = {
         { new: true }
       );
       return avanceEditado;
+      }
     },
 
     eliminarObservacion: async (parent, args) => {
