@@ -37,6 +37,7 @@ const tiposProyecto = gql`
   }
   type Query {
     Proyectos: [Proyecto]
+    ProyectosActivos: [Proyecto]
     Proyecto(_id: String!): Proyecto
     filtrarProyecto(lider: String!): [Proyecto]
   }
