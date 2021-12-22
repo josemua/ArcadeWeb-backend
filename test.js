@@ -53,25 +53,6 @@ it("creates user", async () => {
   varId = result.data.crearUsuario._id;
 });
 
-it("fetch user", async () => {
-  const result = await server.executeOperation({
-    query: gql`
-      query Usuario($id: String!) {
-        Usuario(_id: $id) {
-          correo
-        }
-      }
-    `,
-    variables: {
-      nombre: "test",
-      apellido: "test",
-      identificacion: "test",
-      correo: "testing@testing.com",
-      rol: "ADMINISTRADOR",
-      password: "test",
-    },
-  });
-
   assert.equal(result.data.crearUsuario.correo, "testing@testing.com");
 });
 
