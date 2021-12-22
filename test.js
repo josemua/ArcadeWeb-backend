@@ -53,9 +53,6 @@ it("creates user", async () => {
   varId = result.data.crearUsuario._id;
 });
 
-  assert.equal(result.data.crearUsuario.correo, "testing@testing.com");
-});
-
 it("deletes user", async () => {
   const result = await server.executeOperation({
     query: gql`
