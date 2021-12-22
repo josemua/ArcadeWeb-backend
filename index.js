@@ -39,10 +39,10 @@ app.use(express.json());
 
 app.use(cors());
 
-app.listen({ port: process.env.PORT || 4040 }, async () => {
+app.listen({ port: 4040 }, async () => {
   await conectarBD();
   await server.start();
 
   server.applyMiddleware({ app });
-  console.log(`Servidor conectado al puerto ${process.env.PORT || 4040}`);
+  console.log(`Servidor conectado al puerto 4040`);
 });
